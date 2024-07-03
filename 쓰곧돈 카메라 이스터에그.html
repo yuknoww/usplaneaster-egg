@@ -1,0 +1,54 @@
+git remote add origin https://github.com/yuknoww/usplaneaster-egg.git
+git branch -M main
+git push -u origin main
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카메라 실행 이스터에그</title>
+    <style>
+        #camera {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        video, canvas {
+            width: 100%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h1>카메라 화면</h1>
+    <div id="camera">
+        <video id="video" autoplay></video>
+        <button id="snap">촬영</button>
+        <canvas id="canvas"></canvas>
+    </div>
+    <script>
+        // Get access to the camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            // Display the video stream in the video element
+            var video = document.getElementById('video');
+            video.srcObject = stream;
+            video.play();
+        })
+        .catch(function(err) {
+            console.error("Error accessing the camera: " + err);
+        });
+
+        // Capture the photo
+        document.getElementById('snap').addEventListener('click', function() {
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var video = document.getElementById('video');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        });
+    </script>
+</body>
+</html>
